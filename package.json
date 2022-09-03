@@ -1,0 +1,27 @@
+{
+  "name": "grunt-and-sniff",
+  "version": "0.1.0",
+  "description": "This module is a toolkit that enhances the grunt-contrib-concat plugin to allow the usage of many kind of inclusions and insertions",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HaroldRitter/grunt-and-sniff.git"
+  },
+  "keywords": [
+    "grunt",
+    "concat",
+    "copy",
+    "require",
+    "include",
+    "insert"
+  ],
+  "author": "Harold Ritter",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/HaroldRitter/grunt-and-sniff/issues"
+  },
+  "homepage": "https://github.com/HaroldRitter/grunt-and-sniff#readme"
+}
