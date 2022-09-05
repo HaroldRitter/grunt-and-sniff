@@ -249,6 +249,7 @@ class GSMap extends Array
 							f.position == "insert" ?  "i" : 
 								f.position == "insertOnce" ?  "I" : 
 									"-";
+			sign = "(" + sign + ")";
 			const i = pID.value++;
 			str +=  tab + sign + " " + "#" + i + " " + f.path + "\n" +
 					GSMap.#mapToString(f.includes, tab + "\t", pID);
