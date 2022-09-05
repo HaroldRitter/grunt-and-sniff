@@ -168,7 +168,9 @@ class GSMap extends Array
 	// Returns a string with a tree of all dependencies.
 	toString()
 	{
-		return GSMap.#mapToString(this, "", {value: 0});
+		return 	"[GSMap]\n" + 
+				GSMap.#mapToString(this, "", {value: 0}) +
+				"[/GSMap]\n";
 	}
 
 	// Returns a string with a tree of all dependencies.
