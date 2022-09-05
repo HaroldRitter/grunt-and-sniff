@@ -167,7 +167,7 @@ class GSMap extends Array
 // --> String outputs
 
 	// Returns a string with a tree of all dependencies.
-	toStringfunction()
+	toString()
 	{
 		var lv1 = this.reduce(function(p,e){p.push(e.path);return p;}, []);
 		return GSMap.#mapToString(this, lv1, "");
