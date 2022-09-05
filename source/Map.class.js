@@ -251,8 +251,9 @@ class GSMap extends Array
 									"-";
 			sign = "(" + sign + ")";
 			const i = pID.value++;
+			const tabNext = tab ? tab + "|   " : tab + "    ";
 			str +=  tab + sign + " " + "#" + i + " " + f.path + "\n" +
-					GSMap.#mapToString(f.includes, tab + "\t", pID);
+					GSMap.#mapToString(f.includes, tabNext, pID);
 		});
 		return str;
 	}
