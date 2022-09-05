@@ -155,7 +155,7 @@ class GSIncluder
 		}
 
 		// Starts the file
-		var mapFile = this.#startFile(data, bData.fileList);
+		var mapFile = this.#startFile(data);
 		if(includeType == GSIncType.LATER || includeType == GSIncType.AFTER)
 		{
 			var parent = this.#stack.getNonInsertedParent();
@@ -188,7 +188,6 @@ class GSIncluder
 		var incs = this.#separateCommentsAndIncludes(file, src);
 		data.includes = incs.includes;
 		data.comments = incs.comments;
-		data.fileList = incs.fileList;
 
 		// Cuts the comments + includes at the start of the source
 		src = incs.src;
@@ -299,9 +298,9 @@ class GSIncluder
 // ---> Files reading process
 
 	// Adds the file to the GSMap and to the GS stack
-	#startFile(fileData, fileList)
+	#startFile(fileData)
 	{
-		var mapFile = this.map.addFile(fileData, fileList);
+		var mapFile = this.map.addFile(fileData);
 		this.#stack.getCurrentFile().ready = true;
 		return mapFile;
 	}
@@ -356,7 +355,7 @@ class GSIncluder
 	#separateCommentsAndIncludes(file, src)
 	{
 		var found = false, lastId, res, res2, isLater = false,
-			comments = [], includes = [], fileList = [],
+			comments = [], includes = [],
 			src2 = "", g, lastSrcId = 0;
 		
 		// Separates comments and includes at the start of the file
@@ -392,13 +391,6 @@ class GSIncluder
 				{
 					comments.push(g.comments);
 					includes.push(g.include);
-		
-					while(res2 = regexp.includeSource.exec(g.include))
-					{
-						var filePath = GSIncluder.path(	res2.groups.source,
-														file.dir, true);
-						fileList.push(filePath);
-					}
 				}
 			}
 		}
@@ -407,7 +399,6 @@ class GSIncluder
 
 		return {comments: comments,
 				includes: includes,
-				fileList: fileList,
 				src: src2.substr(lastId),
 				index: lastId};
 	}

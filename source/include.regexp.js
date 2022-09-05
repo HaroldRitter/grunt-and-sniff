@@ -64,11 +64,6 @@ function buildIncludesRegExp()
 				"g");
 }
 
-function buildSourceRegExp()
-{
-	return new RegExp(ot + ws + include + ws + ct, "g");
-}
-
 // ---------- FINAL REGULAR EXPRESSIONS ---------- //
 
 const regex =
@@ -86,7 +81,6 @@ const regex =
 
 	// Detects the inclusion groups and read the content
 	includes: buildIncludesRegExp(),
-	includeSource: buildSourceRegExp(),
 
 	// Detects
 	useStrict: /^\s*("use strict"|'use strict')\s*;?\s*\r?\n?/

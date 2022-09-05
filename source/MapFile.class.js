@@ -14,7 +14,7 @@ class GSMapFile
 {
 // ------> GSMapFile - Constructor
 
-	constructor(parent, file, fileList)
+	constructor(parent, file)
 	{
 		Object.assign(this,
 		{
@@ -36,10 +36,6 @@ class GSMapFile
 			// includes: GSMapFile[] - The files included by this one
 			// in order (the child nodes in the tree)
 			includes: [],
-
-			// beforeList: string[] - The list of files included before
-			// this one
-			beforeList: fileList,
 
 			// position: string - The position of the file related to
 			// the parent

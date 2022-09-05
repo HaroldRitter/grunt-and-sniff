@@ -51,14 +51,13 @@ class GSMap extends Array
 
 	// Adds a file to the map from its path relative 
 	// to the source.
-	// 	fileData: FileData
-	//	fileList: all files that must be included before
+	// 	fileData: GSFileData
 	// OR
 	// 	mapFile: GSMapFile: the GSMapFile returned
 	//	by the Map when a file was added and temporarily
 	//	removed.
 	// 
-	// If fileData are provided with a beforeList,
+	// If fileData are provided,
 	// a corresponding GSMapFile is added
 	// to the "includes" array of the parent, otherwise,
 	// addFile assumes the argument is a previously
@@ -66,16 +65,16 @@ class GSMap extends Array
 	// included again.
 	//
 	// Returns MapFile
-	addFile(file, fileList)
+	addFile(file)
 	{
-		if(!fileList)
+		if(file instanceof GSMapFile)
 		{
 			this.#stack.push(file);
 			return file;
 		}
 		
 		var parent = this.getLastFileInStack();
-		var mapFile = new GSMapFile(parent, file, fileList);
+		var mapFile = new GSMapFile(parent, file);
 
 		(parent && parent.includes || this).push(mapFile);
 		this.#stack.push(mapFile);
@@ -169,8 +168,7 @@ class GSMap extends Array
 	// Returns a string with a tree of all dependencies.
 	toString()
 	{
-		var lv1 = this.reduce(function(p,e){p.push(e.path);return p;}, []);
-		return GSMap.#mapToString(this, lv1, "");
+		return GSMap.#mapToString(this, "");
 	}
 
 	// Returns a string with a tree of all dependencies.
@@ -239,14 +237,18 @@ class GSMap extends Array
 		initValue);
 	}
 
-	static #mapToString(map, before, tab)
+	static #mapToString(map, tab)
 	{
 		var str = "";
 		map.forEach(function(f, i)
 		{
-			var sign = before.indexOf(f.path) == -1 ? "+" : "-";
+			var sign = f.position == "after" ? "+" : 
+						f.position == "later" ?  ">" : 
+							f.position == "insert" ?  "i" : 
+								f.position == "insertOnce" ?  "I" : 
+									"-";
 			str +=  tab + sign + " " + f.path + "\n" +
-					GSMap.#mapToString(f.includes, f.beforeList, tab + "\t");
+					GSMap.#mapToString(f.includes, tab + "\t");
 		});
 		return str;
 	}
