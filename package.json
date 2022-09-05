@@ -23,5 +23,9 @@
   "bugs": {
     "url": "https://github.com/HaroldRitter/grunt-and-sniff/issues"
   },
-  "homepage": "https://github.com/HaroldRitter/grunt-and-sniff#readme"
+  "homepage": "https://github.com/HaroldRitter/grunt-and-sniff#readme",
+  "dependencies":
+  {
+    "easyft-logger": "~0.1.3"
+  }
 }
