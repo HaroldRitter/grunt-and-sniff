@@ -89,7 +89,8 @@ class GSOptions
 		header: "",
 		separator: "",
 		footer: "",
-		insertSurrounder: ""
+		insertSurrounder: "",
+		copyDest: ""
 	}
 }
 
