@@ -168,7 +168,7 @@ class GSMap extends Array
 	// Returns a string with a tree of all dependencies.
 	toString()
 	{
-		return GSMap.#mapToString(this, "");
+		return GSMap.#mapToString(this, "", {value: 0});
 	}
 
 	// Returns a string with a tree of all dependencies.
@@ -237,18 +237,19 @@ class GSMap extends Array
 		initValue);
 	}
 
-	static #mapToString(map, tab)
+	static #mapToString(map, tab, pID)
 	{
 		var str = "";
-		map.forEach(function(f, i)
+		map.forEach(function(f)
 		{
 			var sign = f.position == "after" ? "+" : 
 						f.position == "later" ?  ">" : 
 							f.position == "insert" ?  "i" : 
 								f.position == "insertOnce" ?  "I" : 
 									"-";
-			str +=  tab + sign + " " + f.path + "\n" +
-					GSMap.#mapToString(f.includes, tab + "\t");
+			const i = pID.value++;
+			str +=  tab + sign + " " + "#" + i + " " + f.path + "\n" +
+					GSMap.#mapToString(f.includes, tab + "\t", pID);
 		});
 		return str;
 	}
