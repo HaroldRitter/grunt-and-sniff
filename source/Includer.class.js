@@ -235,9 +235,9 @@ class GSIncluder
 		// Replaces all the requires
 		src = GSIncluder.#replaceRequire(src, "insert");
 		src = GSIncluder.#replaceRequire(src, "insertOnce");
+		src = GSIncluder.#replaceRequire(src, "before", "include");
 		src = GSIncluder.#replaceRequire(src, "after", "includeAfter");
 		src = GSIncluder.#replaceRequire(src, "later", "includeLater");
-		src = GSIncluder.#replaceRequire(src, "include");
 
 		return replaceAll ? src.replace(regexp.require.all, 
 								"$<separator><%=include($<require>)%>") :
