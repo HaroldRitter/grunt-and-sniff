@@ -2,6 +2,9 @@
 
 // ---------- CLASS GSOptions ---------- //
 
+// GSOptions is a proxy that allows to set
+// the options by checking the option types.
+// It also defines the default options.
 // The default options are set at the end
 class GSOptions
 {
@@ -31,7 +34,7 @@ class GSOptions
 
 	constructor(options)
 	{
-		Object.assign(this, GSOptions.#DEFAULTS);
+		this.#init();
 		this.set(options);
 	}
 
@@ -59,7 +62,7 @@ class GSOptions
 				b = this.#value(a, b);
 				if(b !== undefined)
 				{
-					this[a] = b;
+					this.#options[a] = b;
 				}
 			}
 		}
@@ -74,14 +77,14 @@ class GSOptions
 	{
 		if(name === undefined)
 		{
-			return Object.assign({}, this);
+			return Object.assign({}, this.#options);
 		}
-		return this[name];
+		return this.#options[name];
 	}
 
 	clone()
 	{
-		return new GSOptions(this);
+		return new GSOptions(this.#options);
 	}
 
 	//	default()
@@ -92,7 +95,36 @@ class GSOptions
 		return GSOptions.default(a);
 	}
 
+// ------> GSOptions - Private Attributes
+
+	// Inner object used in the proxy
+	#options = {};
+
 // ------> GSOptions - Private Methods
+
+	#init()
+	{
+		// Resets the options with the default values
+		const dfts = GSOptions.#DEFAULTS;
+		Object.assign(this.#options, dfts);
+		
+		// Creates the proxy
+		const self = this,
+			names = Object.getOwnPropertyNames(dfts);
+		names.forEach(function(name)
+		{
+			var n = "\"" + name + "\"";
+			Object.defineProperty(self, name,
+			{
+				enumerable: true,
+				get: new Function("return this.get(" + n + ");"),
+				set: new Function("value",
+								"this.set(" + n + ", value);")
+			});
+		});
+
+		return this;
+	}
 
 	// Checks the existence and the type of the default
 	// value, and returns a value converted to this type
