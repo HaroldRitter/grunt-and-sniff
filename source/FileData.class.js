@@ -27,7 +27,8 @@ class GSFileData
 			srcPathLen = includer.sourceDir.length + process.cwd().length + 2,
 			file = fullPath.substring(srcPathLen),
 			cwdFile = fullPath.substring(process.cwd().length + 1);
-		
+		const config = this.#includer.grunt.config.get(); 
+
 		Object.assign(this,
 		{
 			passedPath: filePath,
@@ -40,8 +41,8 @@ class GSFileData
 			position: GSIncType.toString(incType),
 			parent: parent && parent.path,
 
-			pkg: null,
-			config: null,
+			pkg: config.pkg,
+			config: config,
 			options: includer.options,
 
 			tplOpen: "<%",
@@ -100,39 +101,6 @@ class GSFileData
 	{ 
 		return this.#includer.include(	filePath, undefined,
 										GSIncType.INSERT_ONCE);
-	}
-
-// ------> GSFileData - Public Methods for the includer
-
-	// The data sleep and remove the unused properties
-	// The grunt config is always reload in case it was modified.
-	sleep(includer)
-	{
-		if(this.includer !== includer)
-		{
-			throw new GSError("Call of GSFileData.sleep not allowed");
-		}
-
-		// Removes the config an package
-		this.config = null;
-		this.pkg = null;
-		
-		return this;
-	}
-
-	// The grunt config is always reload in case it was modified.
-	awake(includer)
-	{
-		if(this.includer !== includer)
-		{
-			throw new GSError("Call of GSFileData.awake not allowed");
-		}
-
-		// Gets needed data
-		this.config = this.#includer.grunt.config.get();
-		this.pkg = this.config.pkg;
-
-		return this;
 	}
 
 // ------> GSFileData - Private Attribute
