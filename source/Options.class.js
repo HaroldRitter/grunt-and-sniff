@@ -66,8 +66,16 @@ class GSOptions
 		return this;
 	}
 
+	// get(name)
+	//		Returns the option value with the given name.
+	// get()
+	//		Returns a copy of the options in a simple object.
 	get(name)
 	{
+		if(name === undefined)
+		{
+			return Object.assign({}, this);
+		}
 		return this[name];
 	}
 
