@@ -525,10 +525,17 @@ class GSIncluder
 		// Builds the final destination string for the concatened file:
 		// <files-before> <separator> <header> <built-file> <footer>
 		// <files-after> (<files-later> /* if root */)
-		var finalDest = before + sep + buildData.header +
+		var finalDest = buildData.header +
 						dest + buildData.footer +
 						closure.afterSrc + closure.laterSrc;
 		
+		if(opts.trimmed)
+		{
+			finalDest = finalDest.trim();
+		}
+
+		finalDest = before + sep + finalDest; 
+
 		// Logs the included file
 		this.#logIncluded(fileData);
 
