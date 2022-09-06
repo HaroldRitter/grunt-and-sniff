@@ -1,5 +1,7 @@
 "use strict";
 
+const path = require("path");
+
 const GSError = require("./Error.class.js");
 const GSIncluder = require("./Includer.class.js");
 const gsOptions = require("./options");
@@ -94,9 +96,48 @@ class GSTask
 		return this.registerTask(name, options);
 	}
 
+// --> Tasks
+
+	exportMap(opts)
+	{
+		const map = this.#includer.map;
+		const file = opts && opts.dest || this.#defaultMapPath();
+		const dir = path.join("/", 
+							opts && opts.dir ||
+							this.options.copyDest);
+		
+							if(!file)
+							{
+								throw new GSError(`The task exportMap requires a map file.`);
+							}
+		// Adds the map
+		this.grunt.file.write(file,
+						map.toDependencyList(dir, true),
+						{encoding: "utf-8"});
+	
+		// Logs
+		if(this.options.verbose >= 1)
+		{
+			logger.log(`Map exported to %{lightgreen}${file}%{}`);
+		}
+	}
+
 // ------> GSTask - Private Attributes
 
 	#includer = null;
+
+// ------> GSTask - Private Methods
+
+	#defaultMapPath()
+	{
+		const copyDest = this.options.copyDest;
+		const pkg = this.grunt.config.get("pkg").name.toLowerCase();
+		const file = pkg + ".filelist";
+
+		return copyDest ? 	path.join(copyDest,
+									"/", file) :
+							path.join("/", file);
+	}
 }
 
 // ------> GSTask - Public Static Constants (Info)
@@ -114,6 +155,10 @@ readonly(GSTask,
 
 // The tasks
 readonly(GSTask, "tasks", {});
+readonly(GSTask.tasks,
+{
+	exportMap: "Creates the map of files to be included in order."
+});
 
 // ---> Exports the class
 
