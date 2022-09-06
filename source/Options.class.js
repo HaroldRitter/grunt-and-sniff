@@ -66,6 +66,11 @@ class GSOptions
 		return this;
 	}
 
+	get(name)
+	{
+		return this[name];
+	}
+
 	clone()
 	{
 		return new GSOptions(this);
