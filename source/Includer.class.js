@@ -331,7 +331,8 @@ class GSIncluder
 	// it is processed by the grunt template system.
 	#getSurrounder(surrounder, fileData)
 	{
-		var str = typeof(surrounder) == "function" ? surrounder(fileData) : surrounder;
+		var str = typeof(surrounder) == "function" ?
+						surrounder(fileData) : surrounder;
 		return this.grunt.template.process(str, {data: fileData});
 	}
 
