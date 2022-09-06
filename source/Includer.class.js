@@ -192,12 +192,8 @@ class GSIncluder
 		// Cuts the comments + includes at the start of the source
 		src = incs.src;
 
-		var isInsert = 	includeType == GSIncType.INSERT ||
-						includeType == GSIncType.INSERT_AND_CACHE;
-
 		// Gets the separator
-		var hasSep = !isInsert || opts.insertSurrounder.indexOf("s") > -1;
-		data.separator = hasSep ? opts.separator || "" : "";
+		data.separator = this.#getSurrounder("s", opts.separator, file, includeType);;
 
 		// Gets the header
 		data.header = this.#getSurrounder("h", opts.header, file, includeType);
