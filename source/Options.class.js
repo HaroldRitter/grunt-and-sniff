@@ -54,9 +54,13 @@ class GSOptions
 				});
 			}
 			// set(name: string, value: *)
-			else if(GSOptions.#DEFAULTS.hasOwnProperty(a))
+			else
 			{
-				this[a] = b;
+				b = this.#value(a, b);
+				if(b !== undefined)
+				{
+					this[a] = b;
+				}
 			}
 		}
 		return this;
@@ -73,6 +77,46 @@ class GSOptions
 	default(a)
 	{
 		return GSOptions.default(a);
+	}
+
+// ------> GSOptions - Private Methods
+
+	// Checks the existence and the type of the default
+	// value, and returns a value converted to this type
+	// or undefined if the options does not exist, or
+	// the value is invalid
+	#value(name, value)
+	{
+		const dft = GSOptions.#DEFAULTS[name];
+		const type = dft === null ? "function" : typeof(dft); 
+		switch(type)
+		{
+			case "boolean":
+				return value ? true : false;
+			case "number":
+				value = parseFloat(value);
+				return isNaN(value) ? undefined : value;
+			case "string":
+				return value === null || value === undefined ? 
+						"" : value.toString();
+			case "object":
+				return this.#strongType(value, "object", {});
+			case "function":
+				return this.#strongType(value, "function", null);
+		}
+		return undefined;
+	}
+
+	// Returns the default value if value is null or undefined.
+	// Otherwise, returns the value itself if it matches the
+	// given type, else returns undefined.
+	#strongType(value, type, dft)
+	{
+		return value === null || value === undefined ? 
+					dft :
+					typeof(value) == type ?
+						value :
+						undefined;
 	}
 
 // ------> GSOptions - Private Static Attributes
