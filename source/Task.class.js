@@ -1,5 +1,6 @@
 "use strict";
 
+const GSError = require("./Error.class.js");
 const GSIncluder = require("./Includer.class.js");
 const gsOptions = require("./options");
 const logger = require("./utils/logger.js");
@@ -65,6 +66,34 @@ class GSTask
 		return inc.include(filePath, src);
 	}
 
+// --> Register tasks
+
+	registerTask(name, options)
+	{
+		const self = this;
+		const description = GSTask.tasks[name];
+		const func = this[name];
+		
+		if(!description || typeof(func) !== "function")
+		{
+			throw new GSError(`The task ${name} does not exists.`);
+		}
+
+		const task = function()
+		{
+			return func.call(self, options);
+		};
+
+		this.grunt.registerTask(name, description, task);
+		
+		return name;
+	}
+
+	task(name, options)
+	{
+		return this.registerTask(name, options);
+	}
+
 // ------> GSTask - Private Attributes
 
 	#includer = null;
@@ -82,6 +111,9 @@ readonly(GSTask,
 	name: "Grunt and Sniff",
 	version: pkg.version
 });
+
+// The tasks
+readonly(GSTask, "tasks", {});
 
 // ---> Exports the class
 
