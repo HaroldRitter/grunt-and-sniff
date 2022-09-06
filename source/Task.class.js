@@ -66,7 +66,7 @@ class GSTask
 
 // ------> GSTask - Private Attributes
 
-#includer = null;
+	#includer = null;
 }
 
 // ------> GSTask - Public Static Constants (Info)
