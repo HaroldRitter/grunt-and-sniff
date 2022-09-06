@@ -128,7 +128,8 @@ class GSIncluder
 			// Gets the source from the path if nothing was provided
 			if(original)
 			{
-				src = fs.readFileSync(data.absPath, {encoding: "utf-8"});
+				src = fs.readFileSync(data.absPath,
+									{encoding: this.options.encoding});
 			}
 
 			// Preprocessor
@@ -496,7 +497,8 @@ class GSIncluder
 			
 			// Saves the file
 			var filePath = path.resolve(opts.copyDest, fileData.path);
-			this.grunt.file.write(filePath, copyDest, {encoding: "utf-8"});
+			this.grunt.file.write(filePath, copyDest,
+								{encoding: this.options.encoding});
 		}
 
 		// Retrieves the number of line feeds that are used

@@ -52,7 +52,7 @@ class GSTask
 		{
 			filePath = src;
 			src = this.grunt.file.read(filePath,
-									{encoding: "utf-8"}); 
+									{encoding: this.options.encoding}); 
 		}
 
 		// Process
