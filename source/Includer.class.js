@@ -87,7 +87,9 @@ class GSIncluder
 		// If the file was already included: returns an empty source
 		var inList = this.#cache.contains(data);
 		if( inList && 
-			(includeType == GSIncType.BEFORE || includeType == GSIncType.LATER))
+			(includeType == GSIncType.BEFORE ||
+			includeType == GSIncType.LATER ||
+			includeType == GSIncType.INSERT_ONCE))
 		{
 			return "";
 		}
@@ -113,8 +115,9 @@ class GSIncluder
 		// because their real inclusions are decayed. Plus
 		// the LATER files could be included BEFORE in other files
 		// and this has the priority.
-		if( includeType == GSIncType.BEFORE || !inList &&
-			includeType == GSIncType.INSERT_ONCE)
+		if( includeType == GSIncType.BEFORE || 
+			includeType == GSIncType.INSERT_ONCE ||
+			!inList && includeType == GSIncType.INSERT)
 		{
 			this.#cancelFromLater(data);
 			this.#cache.push(data);
