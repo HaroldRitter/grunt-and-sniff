@@ -43,8 +43,19 @@ class GSTask
 // ------> GSTask - Public Methods
 
 	// Processes in a file in the grunt-contrib-concat plugin
+	// process(src, filePath)
+	// process(filePath)
 	process(src, filePath)
 	{
+		// Checks argument
+		if(filePath === undefined)
+		{
+			filePath = src;
+			src = this.grunt.file.read(filePath,
+									{encoding: "utf-8"}); 
+		}
+
+		// Process
 		var inc = this.#includer;
 		if(inc.inserted === 0)
 		{
