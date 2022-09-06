@@ -61,7 +61,9 @@ class GSFileData
 
 	debug(msg)
 	{
-		logger.warn("%{bold; lightorange}[GS] %{lightpink}DEBUG:%{} " + msg);
+		logger.warn("%{bold; lightorange}[GS] " + 
+			"%{lightpink}DEBUG%{} " +
+			`(%{lightblue; italic}${this.path}%{}): ${msg}`);
 	}
 
 // --> Include methods
