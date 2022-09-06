@@ -408,8 +408,8 @@ class GSIncluder
 	// Launches a process callback if it was defined
 	#process(func, src, data)
 	{
-		var opts = this.options.clone();
-		return typeof(func) == "function" ? func(src, data, opts) : src;
+		return typeof(func) == "function" ?
+					func(src, data, this.options) : src;
 	}
 
 	// Finalizes the inclusion of a file.
