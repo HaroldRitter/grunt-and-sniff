@@ -52,6 +52,8 @@ module.exports = function(grunt)
 	grunt.loadNpmTasks("grunt-contrib-concat");
 	
 	// Register the default and test task (for now it is the same)
-	grunt.registerTask("default", [ "concat" ]);
-	grunt.registerTask("test", [ "concat" ]);
+	grunt.registerTask("default", ["concat"]);
+	grunt.registerTask("test", [ "concat",
+								 gstask.task("exportMap",
+									{dest: PATH.DEST + "/test.filelist"})]);
 };
