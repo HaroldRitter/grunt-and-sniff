@@ -15,5 +15,6 @@ module.exports = GSOptions.Set.newReadonly(
 	separator: "",
 	footer: "",
 	insertSurrounder: "",
-	copyDest: ""
+	copyDest: "",
+	$: {}
 });

@@ -45,10 +45,6 @@ class GSIncluder
 	// map: GSMap
 	map = new GSMap();
 
-	// Used as $ in the templates
-	// to share functions between files
-	global = {};
-
 // ------> GSIncluder - Constructor
 
     constructor(grunt, sourceDir/*:String*/, options/*:GSOptions*/)
