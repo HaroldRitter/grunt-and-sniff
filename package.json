@@ -27,5 +27,10 @@
   "dependencies":
   {
     "easyft-logger": "~0.1.3"
+  },
+  "devDependencies":
+  {
+    "grunt": "~1.4.1",
+    "grunt-contrib-concat": "~2.0.0"
   }
 }
