@@ -14,6 +14,7 @@ const GSIncType = require("./IncType.enum");
 const GSError = require("./Error.class");
 
 const regexp = require("./include.regexp");
+const logger = require("./utils/logger");
 
 // ---------- CLASS GSIncluder ---------- //
 
@@ -524,6 +525,9 @@ class GSIncluder
 		var finalDest = before + sep + buildData.header +
 						dest + buildData.footer +
 						closure.afterSrc + closure.laterSrc;
+		
+		// Logs the included file
+		this.#logIncluded(fileData);
 
 		// If the file is the root, or an after/later/insert file:
 		//	Returns the result directly to write it
@@ -549,6 +553,31 @@ class GSIncluder
 		// anything because the result is added by the parent in
 		// its destination.
 		return "";
+	}
+
+	// logIncluded(file: GSFileData) 
+	#logIncluded(file)
+	{
+		if(this.options.verbose >= 2)
+		{
+			var verb = "";
+			switch(file.position)
+			{
+				case "insertOnce":
+					verb = " once";
+				case "insert":
+					verb = "%{lightyellow}Inserted" + verb + "%{}";
+					break;
+				default:
+					verb = "%{lightaquamarine}Included " +
+							file.position + "%{}";
+			}
+			logger.info(`${verb}: %{lightblue}${file.path}%{}` +
+					(file.parent ? 
+						` %{darkgrey}in %{}%{lightviolet}${file.parent}%{}` :
+						""));
+		}
+		return this;
 	}
 
 // --> After and later file handlings
