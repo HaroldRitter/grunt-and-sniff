@@ -42,6 +42,7 @@ class GSFileData
 
 			pkg: null,
 			config: null,
+			options: includer.options,
 
 			tplOpen: "<%",
 			$: includer.options.$,
