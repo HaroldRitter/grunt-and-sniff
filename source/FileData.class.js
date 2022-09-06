@@ -99,7 +99,7 @@ class GSFileData
 	insertOnce(filePath)
 	{ 
 		return this.#includer.include(	filePath, undefined,
-										GSIncType.INSERT_AND_CACHE);
+										GSIncType.INSERT_ONCE);
 	}
 
 // ------> GSFileData - Public Methods for the includer

@@ -114,7 +114,7 @@ class GSIncluder
 		// the LATER files could be included BEFORE in other files
 		// and this has the priority.
 		if( includeType == GSIncType.BEFORE || !inList &&
-			includeType == GSIncType.INSERT_AND_CACHE)
+			includeType == GSIncType.INSERT_ONCE)
 		{
 			this.#cancelFromLater(data);
 			this.#cache.push(data);
@@ -324,7 +324,7 @@ class GSIncluder
 		const insFlags = this.options.insertSurrounder.toLowerCase();
 		if(!surrounder ||
 			(includeType == GSIncType.INSERT ||
-			includeType == GSIncType.INSERT_AND_CACHE) &&
+			includeType == GSIncType.INSERT_ONCE) &&
 			insFlags.indexOf(flag) == -1)
 		{
 			return "";

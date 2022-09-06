@@ -12,7 +12,7 @@ var GSIncType =
 		return incType === GSIncType.LATER ? "later" :
 					incType === GSIncType.AFTER ? "after" :
 						incType === GSIncType.INSERT ? "insert" :
-							incType === GSIncType.INSERT_AND_CACHE ? "insertOnce" :
+							incType === GSIncType.INSERT_ONCE ? "insertOnce" :
 								"before";
 	},
 
@@ -25,7 +25,7 @@ var GSIncType =
 			incType != GSIncType.AFTER &&
 			incType != GSIncType.LATER &&
 			incType != GSIncType.INSERT &&
-			incType != GSIncType.INSERT_AND_CACHE)
+			incType != GSIncType.INSERT_ONCE)
 		{
 			return GSIncType.BEFORE;
 		}
@@ -39,7 +39,7 @@ readonly(GSIncType,
 	AFTER: 			  1,
 	LATER: 			  2,
 	INSERT: 		  3,
-	INSERT_AND_CACHE: 4
+	INSERT_ONCE: 	  4
 });
 
 module.exports = GSIncType;
