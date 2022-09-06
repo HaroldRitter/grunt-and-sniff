@@ -7,9 +7,9 @@ const path = require("path");
 const PATH =
 {
 	SOURCE_DIR: "test/source",
-	DEST: "final",
-	DEST_FULL: "final/full"
+	DEST: "test/final"
 };
+PATH.DEST_FULL = PATH.DEST + "/full";
 PATH.SOURCE = PATH.SOURCE_DIR + "/A.js";
 
 // Module function
