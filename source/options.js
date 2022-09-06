@@ -12,7 +12,7 @@ module.exports = GSOptions.Set.newReadonly(
 	process: null,
 	postprocess: null,
 	header: "",
-	separator: "",
+	separator: "\n",
 	footer: "",
 	insertSurrounder: "",
 	copyDest: "",
