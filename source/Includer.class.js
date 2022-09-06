@@ -200,14 +200,10 @@ class GSIncluder
 		data.separator = hasSep ? opts.separator || "" : "";
 
 		// Gets the header
-		var hasHead = !isInsert || opts.insertSurrounder.indexOf("h") > -1;
-		data.header = hasHead && opts.header ?
-							this.#getSurrounder(opts.header, file) : "";
+		data.header = this.#getSurrounder("h", opts.header, file, includeType);
 		
 		// Gets the footer
-		var hasFoot = !isInsert || opts.insertSurrounder.indexOf("f") > -1;
-		data.footer = hasFoot && opts.footer ?
-							this.#getSurrounder(opts.footer, file) : "";
+		data.footer = this.#getSurrounder("f", opts.footer, file, includeType);
 
 		// Rebuilds the source:
 		// includes + "use strict" + header + comments + source + footer
@@ -329,8 +325,18 @@ class GSIncluder
 
 	// Returns the header or footer to be inserted in the source before
 	// it is processed by the grunt template system.
-	#getSurrounder(surrounder, fileData)
+	#getSurrounder(flag, surrounder, fileData, includeType)
 	{
+		// No surrounder (insert and no flag)
+		if(!surrounder ||
+			(includeType == GSIncType.INSERT ||
+			includeType == GSIncType.INSERT_AND_CACHE) &&
+			this.options.insertSurrounder.indexOf(flag) == -1)
+		{
+			return "";
+		}
+
+		// Gets the separator
 		var str = typeof(surrounder) == "function" ?
 						surrounder(fileData) : surrounder;
 		return this.grunt.template.process(str, {data: fileData});
