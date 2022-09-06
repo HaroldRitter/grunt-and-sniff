@@ -328,10 +328,11 @@ class GSIncluder
 	#getSurrounder(flag, surrounder, fileData, includeType)
 	{
 		// No surrounder (insert and no flag)
+		const insFlags = this.options.insertSurrounder.toLowerCase();
 		if(!surrounder ||
 			(includeType == GSIncType.INSERT ||
 			includeType == GSIncType.INSERT_AND_CACHE) &&
-			this.options.insertSurrounder.indexOf(flag) == -1)
+			insFlags.indexOf(flag) == -1)
 		{
 			return "";
 		}
