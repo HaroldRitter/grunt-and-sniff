@@ -9,7 +9,7 @@ const GSFileData = require("./FileData.class");
 const GSCache = require("./Cache.class");
 const GSFileBranch = require("./FileBranch.class");
 const GSMap = require("./Map.class");
-const GSOptions = require("./Options.class");
+const gsOptions = require("./options");
 const GSIncType = require("./IncType.enum");
 const GSError = require("./Error.class");
 
@@ -54,7 +54,7 @@ class GSIncluder
     constructor(grunt, sourceDir/*:String*/, options/*:GSOptions*/)
 	{
 		this.grunt = grunt;
-		this.options = options || new GSOptions();
+		this.options = options || gsOptions.options();
 		this.sourceDir = sourceDir;
 	}
 

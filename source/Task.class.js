@@ -1,7 +1,7 @@
 "use strict";
 
 const GSIncluder = require("./Includer.class.js");
-const GSOptions = require("./Options.class.js");
+const gsOptions = require("./options");
 const logger = require("./utils/logger.js");
 const readonly = require("./utils/readonly.js");
 
@@ -21,7 +21,7 @@ class GSTask
 			options = sourceDir;
 			sourceDir = options && options.sourceDir;
 		}
-		options = new GSOptions(options);
+		options = gsOptions.options(options);
 
 		// Public attributes
 		readonly(this,
