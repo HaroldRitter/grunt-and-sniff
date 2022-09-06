@@ -57,7 +57,8 @@ class GSTask
 
 		// Process
 		var inc = this.#includer;
-		if(inc.inserted === 0)
+		if(	this.options.verbose >= 1 &&
+			inc.inserted === 0)
 		{
 			logger.info("Uses %{lightorange}Grunt and Sniff%{}");
 		}
