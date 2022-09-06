@@ -75,7 +75,7 @@ class GSOptions
 		return GSOptions.default(a);
 	}
 
-// ------> GSOptions - Public Static Attributes
+// ------> GSOptions - Private Static Attributes
 
 	static #DEFAULTS =
 	{ 
