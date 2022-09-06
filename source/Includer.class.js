@@ -337,7 +337,7 @@ class GSIncluder
 		// Gets the separator
 		var str = typeof(surrounder) == "function" ?
 						surrounder(fileData) : surrounder;
-		return this.grunt.template.process(str, {data: fileData});
+		return this.#templateProcess(str, fileData);
 	}
 
 	#cutUseStrict(src, removeUS)
@@ -417,6 +417,11 @@ class GSIncluder
 					func(src, data, this.options) : src;
 	}
 
+	#templateProcess(source, fileData)
+	{
+		return this.grunt.template.process(source, {data: fileData});;
+	}
+
 	// Finalizes the inclusion of a file.
 	//
 	// 1. The method processes the template of the file
@@ -448,7 +453,7 @@ class GSIncluder
 		try
 		{
 			// Computes the template of the source file
-			var dest = this.grunt.template.process(buildData.source, {data: fileData});
+			var dest = this.#templateProcess(buildData.source, fileData);
 
 			// Increments the number of insertions/inclusions
 			this.#inserted++;
