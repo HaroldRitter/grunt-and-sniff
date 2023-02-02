@@ -55,5 +55,7 @@ module.exports = function(grunt)
 	grunt.registerTask("default", ["concat"]);
 	grunt.registerTask("test", [ "concat",
 								 gstask.task("exportMap",
-									{dest: PATH.DEST + "/test.filelist"})]);
+									{dest: PATH.DEST + "/test.filelist"}),
+								gstask.task("dependencyReport",
+									{dest: PATH.DEST + "/test-report.html"})]);
 };
