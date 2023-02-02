@@ -128,9 +128,9 @@ GSTask.addTask(
 				["Source", 		src],
 				["Destination", gsTask.options.copyDest],
 				["Included", 	INCLUDED],
-				missing ? ["Missing", 	missing.length] : null
-			]
-			.push(...info)) ["<"]
+				missing ? ["Missing", 	missing.length] : null,
+				...info
+			]) ["<"]
 			.p().i("* The elapsed time is computed from the inclusion of the dependencyReport plugin.") ["<<"]
 
 		if(addOrdered)
