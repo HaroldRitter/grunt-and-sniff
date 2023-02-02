@@ -143,7 +143,7 @@ class GSTask
 
 		const func = task.task, taskFunc = () =>
 		{
-			return func.call(task, this, this.#includer, options);
+			return func.call(task, this, this.#includer.map, options);
 		};
 		
 		this.grunt.registerTask(name, task.description, taskFunc);

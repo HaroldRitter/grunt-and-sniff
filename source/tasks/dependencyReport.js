@@ -30,9 +30,9 @@ GSTask.addTask(
 
 	description: "Creates a dependency report.",
 
-	task: function(gsTask, includer, opts = {})
+	task: function(gsTask, map, opts = {})
 	{
-		const grunt = gsTask.grunt, map = includer.map,
+		const grunt = gsTask.grunt,
 			  addMissing = opts.missing ?? true,
 			  addOrdered = opts.ordered ?? true,
 			  addTree = opts.tree ?? true,
@@ -44,9 +44,9 @@ GSTask.addTask(
 			  file = destPath(gsTask,
 							(pkg) => `${pkg.name.toLowerCase()}${EXT}`,
 							opts),
-			  allFiles = this.getDependencyList(includer),
+			  allFiles = this.getDependencyList(map),
 			  missing = addMissing ? this.getMissingFiles(gsTask,
-											this.getAllFiles(includer)) :
+											this.getAllFiles(map)) :
 						null;
 
 		// Writes the report
@@ -227,16 +227,16 @@ GSTask.addTask(
 		return f.path.replace(/\\/g, "/");
 	},
 
-	getDependencyList: function(includer)
+	getDependencyList: function(map)
 	{
-		return includer.map.dependencyList()
+		return map.dependencyList()
 				.reduce((a, f) => a.push(this.path(f)) && a, []);
 	},
 
-	getAllFiles: function(includer)
+	getAllFiles: function(map)
 	{
 		const all = [];
-		includer.map.eachMap(f => all.push(this.path(f)));
+		map.eachMap(f => all.push(this.path(f)));
 		return all;
 	},
 

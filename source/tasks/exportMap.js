@@ -13,9 +13,8 @@ GSTask.addTask(
 
 	description: "Creates the map of files to be included in order.",
 
-	task: (gsTask, includer, opts) =>
+	task: (gsTask, map, opts) =>
 	{
-		const map = includer.map;
 		const file = destPath(gsTask, "filelist", opts);
 		const dir = path.join("/", 
 							opts && opts.dir ||
