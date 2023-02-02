@@ -497,7 +497,66 @@ the state of the file that is included/processed.
 
 ## Grunt and Sniff Tasks
 
+### Provided tasks
+
 | Name | Description | Options |
 | --- | --- | --- |
 | **exportMap** | Exports a text file with all the file paths in the order of inclusions. | <ul><li>``String`` **dest**``="<copyDest>/<package-name>.filelist"``: The destination file path.</li><li>``String`` **dir**``="<copyDest>"``: The path used as the root of all files. By default, it is the ``copyDest`` folder.</li></ul> |
 | **dependencyReport** | Creates a dependency report with many usefull information, the ordered file list, the inclusion tree and the missing files. | <ul><li>``String`` **dest**: The destination file path. By default, it is the ``<package-name>-dependency-report.html`` file in the ``copyDest`` folder.</li><li>``Object`` **info**``={}``: Additional information to add to the header of the report.</li><li>``Boolean`` **ordered**``=true``: Specifies whether or not the ordered file list (without insertions) is added to the report.</li><li>``Boolean`` **tree**``=true``: Specifies whether or not the inclusion tree (with insertions) is added to the report.</li><li>``Boolean`` **missing**``=true``: Specifies whether or not the missing files are added to the report.</li></ul> |
+
+### Use tasks
+
+Use the ``task(name: string, taskOptions: object)`` function of the ``GSTask`` instance to register the task with ``grunt.registerTask``.
+
+```js
+// Register the default task with the concat task
+// of grunt (required by grunt-and-sniff)
+// and the exportMap and dependencyReport
+// tasks of grunt-and-sniff.
+grunt.registerTask("default", 
+				[ "concat",
+				// gs is a GSTask instance
+				gs.task("exportMap",
+				{
+					dest: PATH.DEST + "/test.filelist"
+				}),
+				gs.task("dependencyReport",
+				{
+					dest: PATH.DEST + "/test-report.html"
+				})]);
+```
+
+### Create a task
+
+Use the ``GSTask.addTask`` to create a new task with the following options:
+- String **name**: the name of the task in the form ``[a-z][a-zA-Z0-9]*``.
+- String **description**: the description of the task.
+- Function **task**: The task function. The ``this`` keyword refers to this added task, so that it is possible to add additional functions to the task. Here are the arguments:
+	 - GSTask **gsTask**
+	 - GSMap **map**
+	 - Object **options**: the options passed when the task is registered with the ``task(name: string, taskOptions: object)`` function of the ``GSTask`` instance.
+
+```js
+GSTask.addTask(
+{
+	name: "info",
+
+	description: "Prints info in the console.",
+
+	task: (	gsTask/*:GSTask*/,
+			map/*:GSMap*/,
+			options/*:Object*/) =>
+	{
+		const pkg  = gsTask.grunt.config.get("pkg");
+		this.log("Project", pkg.name);
+		this.log("Version", pkg.version);
+		this.log("Copy Dest", gsTask.options.copyDest);
+	},
+
+	// It is allowed to set additional functions
+	log: function(name, value)
+	{
+		console.log("\x1b[32m%s\x1b[0m: %s", name, value);
+	}
+});
+```
