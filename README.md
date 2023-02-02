@@ -494,3 +494,10 @@ the state of the file that is included/processed.
 | **includeLater** | Function | Includes a file after the root file was written |
 | **insert** | Function | Inserts a file a the given position |
 | **insertOnce** | Function | Inserts a file a the given position only if it was never inserted/included |
+
+## Grunt and Sniff Tasks
+
+| Name | Description | Options |
+| --- | --- | --- |
+| **exportMap** | Exports a text file with all the file paths in the order of inclusions. | <ul><li>``String`` **dest**``="<copyDest>/<package-name>.filelist"``: The destination file path.</li><li>``String`` **dir**``="<copyDest>"``: The path used as the root of all files. By default, it is the ``copyDest`` folder.</li></ul> |
+| **dependencyReport** | Creates a dependency report with many usefull information, the ordered file list, the inclusion tree and the missing files. | <ul><li>``String`` **dest**: The destination file path. By default, it is the ``<package-name>-dependency-report.html`` file in the ``copyDest`` folder.</li><li>``Object`` **info**``={}``: Additional information to add to the header of the report.</li><li>``Boolean`` **ordered**``=true``: Specifies whether or not the ordered file list (without insertions) is added to the report.</li><li>``Boolean`` **tree**``=true``: Specifies whether or not the inclusion tree (with insertions) is added to the report.</li><li>``Boolean`` **missing**``=true``: Specifies whether or not the missing files are added to the report.</li></ul> |
