@@ -1,6 +1,7 @@
 "use strict";
 
 const path = require("path");
+const destPath = require("./destPath.js");
 
 const GSTask = require("../Task.class.js");
 const GSError = require("../Error.class.js");
@@ -15,7 +16,7 @@ GSTask.addTask(
 	task: (gsTask, includer, opts) =>
 	{
 		const map = includer.map;
-		const file = opts && opts.dest || this.defaultMapPath(gsTask);
+		const file = destPath(gsTask, "filelist", opts);
 		const dir = path.join("/", 
 							opts && opts.dir ||
 							gsTask.options.copyDest);
@@ -35,16 +36,5 @@ GSTask.addTask(
 		{
 			logger.log(`Map exported to %{lightgreen}${file}%{}`);
 		}
-	},
-
-	defaultMapPath: (gsTask) =>
-	{
-		const copyDest = gsTask.options.copyDest;
-		const pkg = gsTask.grunt.config.get("pkg").name.toLowerCase();
-		const file = pkg + ".filelist";
-
-		return copyDest ? 	path.join(copyDest,
-									"/", file) :
-							path.join("/", file);
 	}
 });
