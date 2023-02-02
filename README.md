@@ -29,62 +29,61 @@ This example shows the behavior of a very simple case, but
 Source: **source/index.js**
 
 ```js
-require("hello.func.js");
-require("names.js");
+require("ui.js");
 
-names.forEach(function(name)
+UI.button.addEventListener("click",
+event =>
 {
-	hello(name);
+	logButton(event.target);
 });
 
-require("continuation.js");
+require("logButton.js");
 ```
 
-Included 1: **source/hello.func.js**
+Included 1: **source/ui.js**
 
 ```js
-function hello(name)
+const UI =
 {
-	console.log("Hello " + name + "!");
+	button: document.createElement("button")
+};
+```
+
+Included 2: **source/logButton.js**
+
+```js
+function logButton(button)
+{
+	console.log(`Button clicked: ${button.innerHTML}`);
 }
-```
-
-Included 2: **source/names.js**
-
-```js
-var names = ["Leo", "Clara", "Rosa"];
-```
-
-Included 3: **source/continuation.js**
-
-```js
-console.log("Is everything OK for you all?");
 ```
 
 Result: **destination/concat.js**
 
 ```js
-function hello(name)
+const UI =
 {
-	console.log("Hello " + name + "!");
-}
+	button: document.createElement("button")
+};
 
-var names = ["Leo", "Clara", "Rosa"];
-
-names.forEach(function(name)
+UI.button.addEventListener("click",
+event =>
 {
-	hello(name);
+	logButton(event.target);
 });
 
-console.log("Is everything OK for you all?");
+function logButton(button)
+{
+	console.log(`Button clicked: ${button.innerHTML}`);
+}
 ```
 
 Resulting map: **map.filelist**
 
 ```js
-/destination/full/source/hello.func.js
-/destination/full/source/names.js
+/destination/full/source/ui.js
 /destination/full/source/index.js
+/destination/full/source/logButton.js
 ```
 
 ## Using grunt-and-sniff
@@ -373,104 +372,56 @@ it will be replaced either by ``include`` or by
 
 ### The different inclusion types
 
-Information about the documentation of the inclusion types:
+#### Generalities
 
-- **Name**: The name of the inclusion type, also called a
-position.
-- **Statement**: The statement to use in the template, for example:
-``<%=include("A.js")%>``
-- **Require**: The prefix to use in the Javascript ``require``
-function, for example: ``require("after:C.js")``
+There are two main ways to include files with *grunt-and-sniff*:
+1. The *Gruntfile.js* handles the inclusion of all required files: 
+the files required in the body of the file are included **before**
+by using ```require("<path>")``` in the header.
+2. The *Gruntfile.js* only includes a few files, and the links 
+between files must be done by the inclusions.
+It can be a solution to allow a project to be split 
+into sub-modules:
+the files that are required in the body are included
+**before** by using ```require("<path>")``` in the header,
+and the files that are required inside the
+functions/methods are included **later** (i.e., after
+the root in the inclusion tree)
+by using ```require("<path>")``` in the footer.
+
+#### Inclusion types
+
+| Type | Syntax | Description |
+| --- | --- | --- |
+| **before** | ``<%=include("<path>")%>`` or<br/>``require("<path>")`` or<br/>``require("before:<path>")``<br/>at the begining of the file.|If the file ``<path>`` was never included, it is included in order before the current file. |
+| **later** | ``includeLater("<path>")`` or<br/>``require("<path>")``<br/>(after some code, preferably at the end of the file) or<br/>``require("later:<path>")``| If the file ``<path>`` was never included, it is included later in the process, after the root of the inclusion tree was included. In other words, when *grunt-and-sniff* find a **later** inclusion, it waits for every files that depend into the root file to be included. This is usefull when ``B`` requires the content of ``C`` inside a function/method. |
+| | | |
+| **after** | ``<%=includeAfter("<path>")%>`` or<br/>``require("after:<path>")``<br/>anywhere in the file. | If the file ``<path>`` was never included, it is included in order right after the current file. This is usefull when ``C`` extends the content of ``B`` and is required immediately when ``B`` is required. |
+| **insert** | ``<%=insert("<path>")%>`` or<br/>``require("insert:<path>")``<br/>anywhere in the file. | Inserts the file at the position of the statement in the parent file, even if the file was already included. |
+| **insertOnce** | ``<%=insertOnce("<path>")%>`` or<br/>``require("insertOnce:<path>")``<br/>anywhere in the file. | Inserts the file at the position of the statement in the parent file, only if the file was never included. |
+
+#### Examples
 
 In the examples, an arrow between two files ``A``
 and ``B`` means that ``A`` includes ``B``: (``A``&nbsp;*before*→&nbsp;``B``).
 
-#### Before
-
-| Name | Statement | Require |
-| --- | --- | --- |
-| **before** | ``include("<path>")``(\*) | ``require("<path>)``(\*)(\*\*)<br/>``require("before:<path>)`` |
-
-| Description |
-| --- |
-| The default inclusion type. It includes the file before the parent, only if it was never included. |
-
-| Example |
+| Before |
 | --- |
 | ``A``&nbsp;*before*→&nbsp;``B``&nbsp;*before*→&nbsp;``C`` = *``C B A``* |
 
-(\*) *``require("<path>)`` and ``include("<path>")`` can only be*
-*used at the beginning of the file, otherwise the file is included*
-*later.*
-
-(\*\*) *``require("<path>)`` is detected only if the*
-*``replaceAllRequires`` option is set to ``ture`` (default).*
-
-#### After
-
-| Name | Statement | Require |
-| --- | --- | --- |
-| **after** | ``includeAfter("<path>")`` | ``require("after:<path>)`` |
-
-| Description |
-| --- |
-| Includes the file right after the parent, only if it was never included. This is usefull when ``C`` extends the content of ``B`` and is required immediately when ``B`` is required. |
-
-| Example |
-| --- |
-| ``A``&nbsp;*before*→&nbsp;``B``&nbsp;*after*→&nbsp;``C`` = *``B C A``* |
-
-#### Later
-
-| Name | Statement | Require |
-| --- | --- | --- |
-| **later** | ``includeAfter("<path>")``(\*) | ``require("<path>)``(\*\*)(\*\*\*)<br/>``require("later:<path>)`` |
-
-| Description |
-| --- |
-| Includes the file later in the process, after the root of the inclusion tree was included, only if it was never included. In other words, when *grunt-and-sniff* find a **later** inclusion, it waits for every files that depend into the root file to be included. This is usefull when ``B`` requires ``C``, but not to read the ``B`` file. |
-
-| Example |
+| Later |
 | --- |
 | ``A``&nbsp;*before*→&nbsp;``B``&nbsp;*later*→&nbsp;``C`` = *``B A C``* |
 
-(\*) *``include("<path>)`` can also be used after the last before*
-*inclusion at beginning of the file. However, it is recommended*
-*to use ``includeAfter("<path>)``*
-
-(\*\*) *``require("<path>)`` can only be used after the last before*
-*inclusion at beginning of the file. It is recommended to use*
-*this syntax at the end of the file. At this place, this is*
-*obvious that the file is not included before.*
-
-(\*\*\*) *``require("<path>)`` is detected only if the*
-*``replaceAllRequires`` option is set to ``ture`` (default).*
-
-#### Insert
-
-| Name | Statement | Require |
-| --- | --- | --- |
-| **insert** | ``includeAfter("<path>")`` | ``require("insert:<path>)`` |
-
-| Description |
+| After |
 | --- |
-| Inserts the file at the position of the statement in the parent file, even if the file was already included. |
+| ``A``&nbsp;*before*→&nbsp;``B``&nbsp;*after*→&nbsp;``C`` = *``B C A``* |
 
-| Example |
+| Insert |
 | --- |
 | **``A``** = ``var i = 0; require("insert:B") var k = 0;``<br/>**``B``** = ``var j = 1;``<br/>**Result** = ``var i = 0; var j = 1; var k = 0;`` |
 
-#### Insert Once
-
-| Name | Statement | Require |
-| --- | --- | --- |
-| **inertOnce** | ``includeAfter("<path>")`` | ``require("inertOnce:<path>)`` |
-
-| Description |
-| --- |
-| Inserts the file at the position of the statement in the parent file, only if the file was never included. |
-
-| Example |
+| Insert Once |
 | --- |
 | **``A``** = ``var i = 0; require("insertOnce:B") var k = 0;``<br/>**``B``** = ``var j = 1;``<br/>**Result** (B was never included) = ``var i = 0; var j = 1; var k = 0;``<br/>**Result** (B was included) = ``var i = 0;  var k = 0;`` |
 
