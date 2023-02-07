@@ -1,6 +1,6 @@
 {
   "name": "grunt-and-sniff",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "This module is a toolkit that enhances the grunt-contrib-concat plugin to allow the usage of many kind of inclusions and insertions",
   "main": "index.js",
   "scripts": {

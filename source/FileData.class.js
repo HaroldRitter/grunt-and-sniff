@@ -23,7 +23,7 @@ class GSFileData
 		this.#includer = includer;
 
 		// Gets all required paths
-		var fullPath = GSIncluder.path(filePath, parent && parent.dir || ""),
+		var fullPath = includer.path(filePath, parent && parent.dir || ""),
 			srcPathLen = includer.sourceDir.length + process.cwd().length + 2,
 			file = fullPath.substring(srcPathLen),
 			cwdFile = fullPath.substring(process.cwd().length + 1);

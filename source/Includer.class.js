@@ -20,21 +20,6 @@ const logger = require("./utils/logger");
 
 class GSIncluder
 {
-// ------> GSIncluder - Public Static Methods
-
-	// Takes the path passed to an inclusion statement
-	// and returns the absolute path, or the path relative
-	// to the source directory if rel is true.
-	static path(filePath/*:String*/, parentDir/*:String*/, rel/*:Boolean*/)
-	{
-		return filePath[0] == "\\" || filePath[0] == "/" ?
-						rel ?
-							path.join("", filePath).substring(1) :
-							path.join(process.cwd(), this.sourceDir, filePath) :
-						parentDir ? path.join(parentDir, filePath) :
-									path.join(process.cwd(), filePath);
-	}
-
 // ------> GSIncluder - Public Attribute
 
 	// grunt: Object
@@ -63,6 +48,19 @@ class GSIncluder
 	}
 
 // ------> GSIncluder - Public Methods
+
+	// Takes the path passed to an inclusion statement
+	// and returns the absolute path, or the path relative
+	// to the source directory if rel is true.
+	path(filePath/*:String*/, parentDir/*:String*/, rel/*:Boolean*/)
+	{
+		return filePath[0] == "\\" || filePath[0] == "/" ?
+						rel ?
+							path.join("", filePath).substring(1) :
+							path.join(process.cwd(), this.sourceDir, filePath) :
+						parentDir ? path.join(parentDir, filePath) :
+									path.join(process.cwd(), filePath);
+	}
 
 // --> The big inclusion function
 
