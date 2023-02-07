@@ -4,10 +4,12 @@
 var GSTask = require("./source/Task.class.js");
 
 // Adds all the tasks
-const fs = require("fs");
-fs.readdirSync("./source/tasks").forEach((file) =>
+const fs = require("fs"),
+	  path = require("path"),
+	  taskPath = path.resolve(__dirname, "./source/tasks");
+fs.readdirSync(taskPath).forEach((file) =>
 {
-	file = "./source/tasks/" + file;
+	file = `${taskPath}/${file}`;
 	if(fs.statSync(file).isFile())
 	{
 		require(file);
