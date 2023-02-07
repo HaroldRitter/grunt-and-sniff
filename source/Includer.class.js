@@ -419,7 +419,9 @@ class GSIncluder
 
 	#templateProcess(source, fileData)
 	{
-		return this.grunt.template.process(source, {data: fileData});;
+		return logger.gruntWarnModifier(this.grunt,
+				(e) => `[Template: ${fileData.cwdPath}]\n${e.message}`,
+				() => this.grunt.template.process(source, {data: fileData}));
 	}
 
 	// Finalizes the inclusion of a file.
