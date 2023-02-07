@@ -75,6 +75,7 @@ const regex =
 		include: buildRequireRegExp("include"),
 		insert: buildRequireRegExp("insert"),
 		insertOnce: buildRequireRegExp("insertOnce"),
+		before: buildRequireRegExp("before"),
 		after: buildRequireRegExp("after"),
 		later: buildRequireRegExp("later")
 	},
