@@ -240,6 +240,10 @@ class GSIncluder
 	{
 		const rep = "$<separator><%=" + (repType || type) +
 					"($<quote>$<url>$<quote>)%>";
+		if(!regexp.require[type])
+		{
+			throw new GSError("Invalid require type: " + type);
+		}
 		return src.replace(regexp.require[type], rep);
 	}
 
