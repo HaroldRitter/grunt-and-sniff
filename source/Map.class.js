@@ -181,10 +181,10 @@ class GSMap extends Array
 		{
 			dir = dir.replace(/\\/g, "/");
 		}
-		return this.#ordered.reduce(function(prev, elt)
+		return this.#ordered.reduce(function(prev, elt, i)
 		{
 			var f = forURL ? elt.path.replace(/\\/g, "/") : elt.path;
-			return prev + GSMap.#dir(dir, f) + "\n";
+			return prev + (i ? "\n" : "") + GSMap.#dir(dir, f);
 		}, "");
 	}
 
