@@ -73,34 +73,34 @@ class GSFileData
 
 // --> Include methods
 
-	include(filePath)
+	include(filePath, args = null)
 	{
 		return this.#includer.include(	filePath, undefined,
-										GSIncType.BEFORE);
+										GSIncType.BEFORE, args);
 	}
 
-	includeAfter(filePath)
+	includeAfter(filePath, args = null)
 	{
 		return this.#includer.include(	filePath, undefined,
-										GSIncType.AFTER);
+										GSIncType.AFTER, args);
 	}
 
-	includeLater(filePath)
+	includeLater(filePath, args = null)
 	{
 		return this.#includer.include(	filePath, undefined,
-										GSIncType.LATER);
+										GSIncType.LATER, args);
 	}
 
-	insert(filePath)
+	insert(filePath, args = null)
 	{ 
 		return this.#includer.include(	filePath, undefined,
-										GSIncType.INSERT);
+										GSIncType.INSERT, args);
 	}
 
-	insertOnce(filePath)
+	insertOnce(filePath, args = null)
 	{ 
 		return this.#includer.include(	filePath, undefined,
-										GSIncType.INSERT_ONCE);
+										GSIncType.INSERT_ONCE, args);
 	}
 
 // ------> GSFileData - Private Attribute

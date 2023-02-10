@@ -64,7 +64,7 @@ class GSIncluder
 
 // --> The big inclusion function
 
-	include(filePath, src, includeType)
+	include(filePath, src, includeType, args = null)
 	{
 		// Sets the default value of includeType to BEFORE
 		includeType = GSIncType.get(includeType);
@@ -76,6 +76,8 @@ class GSIncluder
 			// Builds all data passed to the template
 			data = this.#completeFileData(filePath, includeType);
 
+		data.args = args || {};
+		
 		// Checks the self inclusion
 		if((currentFile && currentFile.path) === data.path)
 		{
