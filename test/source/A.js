@@ -2,7 +2,7 @@
 
 require("B.js");
 
-<%=$.comment($.testVar /*testVar is passed in options*/)%>
+<%=insert("specials/comment.insert.js", {str: $.testVar} /*testVar is passed in options*/)%>
 
 B.violet = new Color(163, 112, 214);
 B.hello = function()
@@ -12,7 +12,7 @@ B.hello = function()
 
 console.log("B.red", B.color().toString());
 
-<%=$.comment("Creates a random color")%>
+<%=insert("specials/comment.insert.js", {str: "Creates a random color"})%>
 console.log("B.randomColor",
 			B.randomColor().toString());
 
