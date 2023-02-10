@@ -12,7 +12,7 @@ B.hello = function()
 
 console.log("B.red", B.color().toString());
 
-<%=insert("specials/comment.insert.js", {str: "Creates a random color"})%>
+<%=$.comment("Creates a random color")%>
 console.log("B.randomColor",
 			B.randomColor().toString());
 

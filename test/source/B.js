@@ -7,10 +7,13 @@ require("D.js");
 // Defines the comment method
 $.comment = function(str)
 {
-	return "/* \\_) " +
-	str.replace("/*", "/ *") +
-	" (_/ */";
+	return tplContext(() =>
+	{
+		%>/* \\_) <%=args.str.replace("/*", "/ *")%> (_/ */<%
+	},
+	{str: str});
 };
+
 %>
 require("after:F.js");
 require("later:G.js");
