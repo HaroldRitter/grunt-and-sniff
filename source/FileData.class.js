@@ -41,6 +41,7 @@ class GSFileData
 			position: GSIncType.toString(incType),
 			parent: parent && parent.path,
 
+			grunt: includer.grunt,
 			pkg: config.pkg,
 			config: config,
 			options: includer.options,
@@ -69,6 +70,27 @@ class GSFileData
 				"%{lightpink}DEBUG%{} " +
 				`(%{lightblue; italic}${this.path}%{}): ${msg}`);
 		}
+	}
+
+	/**
+	* The template context allows to return the output of
+	* a template.
+	* @param {Function} cb 
+	* @param {object} [args] - An object that passes variables
+	*				to the callback in the ``args`` variable.
+	*				The callback must not declare the ``args``
+	*				argument.
+	* @returns {string}
+	*/
+	tplContext(cb, args = null)
+	{
+		this.args = args || {};
+		const str = "<%" + cb.toString()
+					.replace(/^(?:function\s*)?\([^\)]*\)\s*(?:=>)\s*\{?/, "")
+					.replace(/\}$/, "") + "%>";
+		const res = this.grunt.template.process(str, {data: this});
+		delete this.args;
+		return res;
 	}
 
 // --> Include methods
