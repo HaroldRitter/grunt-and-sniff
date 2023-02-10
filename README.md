@@ -502,6 +502,24 @@ the state of the file that is included/processed.
 | **includeLater(<br/>path: string[,<br/>args: object])** | Function | Includes a file after the root file was written |
 | **insert(<br/>path: string[,<br/>args: object])** | Function | Inserts a file a the given position |
 | **insertOnce(<br/>path: string[,<br/>args: object])** | Function | Inserts a file a the given position only if it was never inserted/included |
+***Functions***
+| **tplContext\*(<br/>cb: Function[,<br/>args: object])** | Function | Return the result of the inline template. |
+
+\* *Example of usage of tplContext:*
+```js
+$.createFunction = (name, args, code) =>
+{
+	tplContext(() =>
+	{
+%>
+function <%=args.name%>(<%=args.args%>)
+{
+<%=args.code%>
+}
+<%
+	}, {name: name, args: args, code: code});
+};
+```
 
 ## Grunt and Sniff Tasks
 
