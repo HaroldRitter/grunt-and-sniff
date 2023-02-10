@@ -334,7 +334,8 @@ and the corresponding ``require`` prefix.
 ### Including using the grunt template
 
 ```js
-<%=include("./MyVarClass.class.js")%>
+<%=include(	"./MyVarClass.class.js",
+			{option: "something"})%>
 
 const theVar = new MyVarClass();
 function makeSuperVar()
@@ -346,6 +347,11 @@ function makeSuperVar()
 <%=includeAfter("./extendTheX.js")%>
 <%=includeLater("./Super.class.js")%>
 ```
+
+This kind of inclusion allows to pass some arguments
+to the included template.
+The included template provides the passed arguments
+in the ``args`` variable.
 
 ### Including using the require statements
 
@@ -369,6 +375,8 @@ If the ``replaceAllRequires`` option is set to ``true`` (default),
 it is possible to use require without any prefix,
 it will be replaced either by ``include`` or by
 ``includeLater`` depending on the position of the statement.
+
+This method does not allow arguments.
 
 ### The different inclusion types
 
@@ -489,11 +497,11 @@ the state of the file that is included/processed.
 | **debug** | Object | The debug function writes the message in the console |
 | **tplOpen** | String | The opening of a template (``"<%"``) |
 ***Inclusions***
-| **include** | Function | Includes a file before the current one |
-| **includeAfter** | Function | Includes a file right after the current one |
-| **includeLater** | Function | Includes a file after the root file was written |
-| **insert** | Function | Inserts a file a the given position |
-| **insertOnce** | Function | Inserts a file a the given position only if it was never inserted/included |
+| **include(<br/>path: string[,<br/>args: object])** | Function | Includes a file before the current one |
+| **includeAfter(<br/>path: string[,<br/>args: object])** | Function | Includes a file right after the current one |
+| **includeLater(<br/>path: string[,<br/>args: object])** | Function | Includes a file after the root file was written |
+| **insert(<br/>path: string[,<br/>args: object])** | Function | Inserts a file a the given position |
+| **insertOnce(<br/>path: string[,<br/>args: object])** | Function | Inserts a file a the given position only if it was never inserted/included |
 
 ## Grunt and Sniff Tasks
 
