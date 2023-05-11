@@ -494,9 +494,12 @@ class GSIncluder
 		// <use-strict> <built-file>
 		if(opts.copyDest)
 		{
+			const forceUS = opts.forceDestUseStrict;
 			// Adds the "use strict" statement
 			var us = buildData.useStrict ? buildData.useStrict : 
-						opts.forceDestUseStrict ?
+						forceUS === true ||
+						forceUS && forceUS instanceof Array && 
+						forceUS.find(ext => this.#testExt(ext, fileData.path)) ?
 							/^\s*\r?\n/.test(dest) ? '"use strict";' :
 								'"use strict";\n' : 
 							"";
@@ -675,6 +678,15 @@ class GSIncluder
 							data.parent ? '"' + data.parent + '"' : "the source",
 							error.message,
 							error.stack);
+	}
+
+// --> Utils
+
+	#testExt(ext, path)
+	{
+		const escExt = ext.replace(/[\.\-\+\*\(\)\[\]\{\}\?\^\$\|\/\\]/g, "\\$&");
+		const re = new RegExp(escExt + "$");
+		return re.test(path);
 	}
 }
 
