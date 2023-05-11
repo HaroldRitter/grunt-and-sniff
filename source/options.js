@@ -5,7 +5,7 @@ const GSOptions = require("./options/Options.class");
 module.exports = GSOptions.Set.newReadonly(
 { 
 	removeSourceUseStrict: true,
-	forceDestUseStrict: true,
+	forceDestUseStrict: [".js"], // Or a single extension as a string or a bool
 	replaceAllRequires: true,
 	trimmed: true,
 	preprocess: null,
