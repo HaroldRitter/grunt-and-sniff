@@ -686,7 +686,7 @@ class GSIncluder
 	#testExt(ext, path)
 	{
 		const escExt = ext.replace(/[\.\-\+\*\(\)\[\]\{\}\?\^\$\|\/\\]/g, "\\$&");
-		const re = new RegExp(escExt + "$");
+		const re = new RegExp(escExt + "$", "i");
 		return re.test(path);
 	}
 }
