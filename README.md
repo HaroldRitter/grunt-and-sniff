@@ -227,9 +227,11 @@ replaced with the file path.
 	affect the copied file because it does not make any sens, it only´
 	affects the concatenated file.
 
-- **``forceDestUseStrict``**: ``Boolean`` [optional=``true``]
+- **``forceDestUseStrict``**: ``String``|``String[]``|``Boolean`` [optional=``[".js"]``]
 
-	Adds ``"use strict";`` at the begining of every destination files:
+	If ``true``, or the extension of the file (case insensitive)
+	matches the extension/one of the extensions in ``forceDestUseStrict``:
+	adds ``"use strict";`` at the begining of the destination file:
 	the concatenated file, and the copied files if a ``copyDest``
 	is supplied.
 	It is not the opposite of the ``removeUseStrict`` option
