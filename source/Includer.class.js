@@ -494,7 +494,8 @@ class GSIncluder
 		// <use-strict> <built-file>
 		if(opts.copyDest)
 		{
-			const forceUS = opts.forceDestUseStrict;
+			const forceUS = typeof(opts.forceDestUseStrict) == "string" ?
+							[opts.forceDestUseStrict] : opts.forceDestUseStrict;
 			// Adds the "use strict" statement
 			var us = buildData.useStrict ? buildData.useStrict : 
 						forceUS === true ||
