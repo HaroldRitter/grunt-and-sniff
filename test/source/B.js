@@ -1,5 +1,3 @@
-"use strict";
-
 require("D.js");
 
 <%=debug("Declares the comment template function")%>
@@ -18,6 +16,9 @@ $.comment = function(str)
 require("after:F.js");
 require("later:G.js");
 
+/*
+require("insert:doc.jsdoc");
+*/
 var B =
 {
 	randomTree: function()
