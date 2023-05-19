@@ -97,7 +97,7 @@ The ``GSTask`` constructor takes three argument:
 | Name | Type | Description |
 | --- | --- | --- |
 | **``grunt``** | ``Object`` | The grunt object passed to the function exported in ``GruntFile.js``. |
-| **``sourceDir``** | ``String`` | The path of the source directory relative to the path of the project. |
+| **``sourceDir``** | ``String`` | The path of the source directory relative to the path of the project. It is used to provide all files as a relative files to the source root. |
 | **``options``** [optional] | ``Object`` | A set of options that are described in the **"The Options** chapter. |
 
 ### Grunt configuration
