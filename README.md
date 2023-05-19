@@ -120,7 +120,7 @@ const gs = new GSTask(grunt, SOURCE_DIR,
 	// the insert and insertOnce statements
 	// and the variables passed to the files
 	// by grunt-and-sniff will not be defined.
-	copyTest: DEST_FULL_DIR,
+	copyDest: DEST_FULL_DIR,
 
 	// Indeed, grunt-and-sniff takes care of the
 	// inclusions, so the separator, the headers
@@ -407,7 +407,7 @@ by using ```require("<path>")``` in the footer.
 | **later** | ``includeLater("<path>")`` or<br/>``require("<path>")``<br/>(after some code, preferably at the end of the file) or<br/>``require("later:<path>")``| If the file ``<path>`` was never included, it is included later in the process, after the root of the inclusion tree was included. In other words, when *grunt-and-sniff* find a **later** inclusion, it waits for every files that depend into the root file to be included. This is usefull when ``B`` requires the content of ``C`` inside a function/method. |
 | | | |
 | **after** | ``<%=includeAfter("<path>")%>`` or<br/>``require("after:<path>")``<br/>anywhere in the file. | If the file ``<path>`` was never included, it is included in order right after the current file. This is usefull when ``C`` extends the content of ``B`` and is required immediately when ``B`` is required. |
-| **insert** | ``<%=insert("<path>")%>`` or<br/>``require("insert:<path>")``<br/>anywhere in the file. | Inserts the file at the position of the statement in the parent file, even if the file was already included. |
+| **insert** | ``<%=insert("<path>")%>`` or<br/>``require("insert:<path>")``<br/>anywhere in the file. | Inserts the file at the position of the statement in the parent file, even if the file was already included. The inserted files are not copied to the  |
 | **insertOnce** | ``<%=insertOnce("<path>")%>`` or<br/>``require("insertOnce:<path>")``<br/>anywhere in the file. | Inserts the file at the position of the statement in the parent file, only if the file was never included. |
 
 #### Examples
