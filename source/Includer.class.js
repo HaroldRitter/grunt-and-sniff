@@ -511,9 +511,7 @@ class GSIncluder
 									copyDest, fileData);
 			
 			// Saves the file
-			var filePath = path.resolve(opts.copyDest, fileData.path);
-			this.grunt.file.write(filePath, copyDest,
-								{encoding: this.options.encoding});
+			this.#save(fileData, copyDest);
 		}
 
 		// Retrieves the number of line feeds that are used
@@ -688,6 +686,23 @@ class GSIncluder
 		const escExt = ext.replace(/[\.\-\+\*\(\)\[\]\{\}\?\^\$\|\/\\]/g, "\\$&");
 		const re = new RegExp(escExt + "$", "i");
 		return re.test(path);
+	}
+
+// --> Save
+
+	#save(fileData, src)
+	{
+		if(fileData.position != "insert" &&
+		   fileData.position != "insertOnce")
+		{
+			const opts = this.options;
+			const filePath = path.resolve(opts.copyDest,
+										fileData.path);
+			this.grunt.file.write(filePath, src,
+								{encoding: opts.encoding});
+			return true;
+		}
+		return false;
 	}
 }
 
