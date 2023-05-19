@@ -511,7 +511,7 @@ the state of the file that is included/processed.
 ```js
 $.createFunction = (name, args, code) =>
 {
-	tplContext(() =>
+	return tplContext(() =>
 	{
 %>
 function <%=args.name%>(<%=args.args%>)
