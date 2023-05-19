@@ -50,10 +50,23 @@ module.exports = function(grunt)
 
 	// Loads all the grunt tasks
 	grunt.loadNpmTasks("grunt-contrib-concat");
+
+	// Deletes the destination folder
+	grunt.registerTask("delete", "Delete the destination file",
+	() =>
+	{
+		if(grunt.file.exists(PATH.DEST))
+		{
+			grunt.file.delete(PATH.DEST);
+			console.log("%s \x1b[32m%s\x1b[0m",
+						"Destination folder deleted:", 	PATH.DEST);
+		}
+	});
 	
 	// Register the default and test task (for now it is the same)
-	grunt.registerTask("default", ["concat"]);
-	grunt.registerTask("test", [ "concat",
+	grunt.registerTask("default", ["delete", "concat"]);
+	grunt.registerTask("test", [ "delete", 
+								"concat",
 								 gstask.task("exportMap",
 									{dest: PATH.DEST + "/test.filelist"}),
 								gstask.task("dependencyReport",
