@@ -112,7 +112,7 @@ const DEST = DEST_DIR + "/concat.js";
 // Creates the GSTask from the grunt object,
 // the source directory, and the options
 const GSTask = require("grunt-and-sniff");
-const gs = new GSTask(grunt, SOURCE,
+const gs = new GSTask(grunt, SOURCE_DIR,
 {
 	// This will also copy the files one per
 	// one in the given destination directory.
