@@ -1,5 +1,9 @@
 # Grunt and Sniff - Changelog
 
+# [0.5.0] - 20 Mai 2023
+
+- Adds the ``output`` to the file data (in insert, insertOnce and include functions)
+
 # [0.4.1] - 20 Mai 2023
 
 - Minor fix: switches to the
