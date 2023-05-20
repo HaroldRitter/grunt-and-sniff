@@ -48,7 +48,8 @@ class GSFileData
 
 			tplOpen: "<%",
 			$: includer.options.$,
-			args: {}
+			args: {},
+			output: {}
 		});
 
 		this.#bindIncludeFunctions();
@@ -96,10 +97,11 @@ class GSFileData
 
 // --> Include methods
 
-	include(filePath, args = null)
+	include(filePath, args = null, output = null)
 	{
 		return this.#includer.include(	filePath, undefined,
-										GSIncType.BEFORE, args);
+										GSIncType.BEFORE,
+										args, output);
 	}
 
 	includeAfter(filePath, args = null)
@@ -114,16 +116,18 @@ class GSFileData
 										GSIncType.LATER, args);
 	}
 
-	insert(filePath, args = null)
+	insert(filePath, args = null, output = null)
 	{ 
 		return this.#includer.include(	filePath, undefined,
-										GSIncType.INSERT, args);
+										GSIncType.INSERT,
+										args, output);
 	}
 
-	insertOnce(filePath, args = null)
+	insertOnce(filePath, args = null, output = null)
 	{ 
 		return this.#includer.include(	filePath, undefined,
-										GSIncType.INSERT_ONCE, args);
+										GSIncType.INSERT_ONCE,
+										args, output);
 	}
 
 // ------> GSFileData - Private Attribute

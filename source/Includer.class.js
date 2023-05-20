@@ -64,7 +64,8 @@ class GSIncluder
 
 // --> The big inclusion function
 
-	include(filePath, src, includeType, args = null)
+	include(filePath, src, includeType,
+			args = null, output = null)
 	{
 		// Sets the default value of includeType to BEFORE
 		includeType = GSIncType.get(includeType);
@@ -77,6 +78,7 @@ class GSIncluder
 			data = this.#completeFileData(filePath, includeType);
 
 		this.#addFileObjectData(data, "args", args);
+		this.#addFileObjectData(data, "output", output);
 		
 		// Checks the self inclusion
 		if((currentFile && currentFile.path) === data.path)
