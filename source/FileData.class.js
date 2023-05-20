@@ -48,6 +48,7 @@ class GSFileData
 
 			tplOpen: "<%",
 			$: includer.options.$,
+			args: {}
 		});
 
 		this.#bindIncludeFunctions();

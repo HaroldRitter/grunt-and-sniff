@@ -76,7 +76,7 @@ class GSIncluder
 			// Builds all data passed to the template
 			data = this.#completeFileData(filePath, includeType);
 
-		data.args = args || {};
+		this.#addFileObjectData(data, "args", args);
 		
 		// Checks the self inclusion
 		if((currentFile && currentFile.path) === data.path)
@@ -686,6 +686,23 @@ class GSIncluder
 		const escExt = ext.replace(/[\.\-\+\*\(\)\[\]\{\}\?\^\$\|\/\\]/g, "\\$&");
 		const re = new RegExp(escExt + "$", "i");
 		return re.test(path);
+	}
+
+	// Adds an object property to the file data
+	#addFileObjectData(data, name, value)
+	{
+		if(value)
+		{
+			if(typeof(value) == "object")
+			{
+				data[name] = value;
+			}
+			else
+			{
+				throw new GSError(`Invalid file object data type for "${name}": ${typeof(value)}`);
+			}
+		}
+		return data;
 	}
 
 // --> Save
