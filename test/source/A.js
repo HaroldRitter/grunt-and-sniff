@@ -2,7 +2,8 @@
 
 require("B.js");
 
-<%=insert("specials/comment.insert.js", {str: $.testVar} /*testVar is passed in options*/)%>
+<%=insert("specials/comment.insert.js", {str: $.testVar} /*testVar is passed in options*/, (output.comment = {}))%>
+// <%=output.comment.comment%>
 
 B.violet = new Color(163, 112, 214);
 B.hello = function()
