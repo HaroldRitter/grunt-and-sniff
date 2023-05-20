@@ -1,5 +1,12 @@
 # Grunt and Sniff - Changelog
 
+# [0.4.1] - 20 Mai 2023
+
+- Minor fix: switches to the
+last grunt version in the dev dependencies: 1.6.1
+(fix race condition and traversal path in older
+version - only for the example)
+
 # [0.4.0] - 19 Mai 2023
 
 - The inserted files are not saved anymore

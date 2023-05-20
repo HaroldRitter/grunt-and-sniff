@@ -30,7 +30,7 @@
   },
   "devDependencies":
   {
-    "grunt": "~1.4.1",
+    "grunt": "~1.6.1",
     "grunt-contrib-concat": "~2.0.0"
   }
 }
